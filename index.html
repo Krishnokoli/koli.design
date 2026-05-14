@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Koli – Product Designer</title>
+
+<style>
+/* ── FONTS ── */
+@font-face {
+  font-family: 'Bestie Seventy';
+  src: url('Bestie_Seventy.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --black: #111;
+  --white: #f9f8f5;
+  --grey-card: #e5e5e5;
+  --grey-light: #ebebeb;
+  --grey-mid: #d0d0d0;
+  --grey-muted: #b1b2b5;
+  --text: #1a1a1a;
+  --muted: #777;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --max: 900px;
+  --pad: 40px;
+}
+
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+
+.section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(44px, 6vw, 64px);
+  font-weight: 600;
+  letter-spacing: -1.5px;
+  line-height: 1;
+  color: var(--black);
+  margin-bottom: 28px;
+}
+
+.divider-wrap { padding: 0 var(--pad); max-width: var(--max); margin: 0 auto; }
+.divider-line { border: none; border-top: 1.5px solid var(--grey-mid); }
+
+/* ── CARDS ── */
+.card {
+  background: var(--grey-card);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 20px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.10); }
+
+.card-thumb {
+  width: 68px;
+  height: 68px;
+  background: #fff;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+.card-title { font-size: 20px; font-weight: 500; margin-bottom: 6px; color: var(--black); }
+.card-desc  { font-size: 13px; font-weight: 400; color: #555; line-height: 1.6; }
+
+/* ════════════ HERO ════════════ */
+.hero {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 56px var(--pad) 20px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.hero-identity { display: flex; flex-direction: column; gap: 8px; }
+
+.hero-record {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  animation: spin 9s linear infinite;
+  border-radius: 50%;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.logo-koli {
+  font-family: 'Bestie Seventy', serif;
+  font-size: 96px;
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -2px;
+  color: var(--black);
+  margin-top: 4px;
+}
+.logo-sub {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-top: 6px;
+}
+
+/* Frame + p5 */
+.hero-frame-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+
+.hero-frame-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-frame-inner {
+  position: absolute;
+  top: 7.5%;
+  left: 6%;
+  right: 6%;
+  bottom: 7.5%;
+  z-index: 1;
+  overflow: hidden;
+}
+.hero-frame-inner iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ════════════ WORK ════════════ */
+.work-section {
+  max-width: var(--max);
+  margin: 56px auto 0;
+  padding: 0 var(--pad);
+}
+
+.work-inner { position: relative; }
+
+.lamp-container {
+  position: absolute;
+  top: -20px;
+  right: -50px;
+  width: 190px;
+  height: 230px;
+  pointer-events: none;
+  z-index: 10;
+}
+.lamp-img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transition: opacity 0.3s ease;
+}
+.lamp-off { opacity: 1; }
+.lamp-on  { opacity: 0; }
+
+.work-inner:hover .lamp-off { opacity: 0; }
+.work-inner:hover .lamp-on  { opacity: 1; }
+
+.work-cards { display: flex; flex-direction: column; gap: 14px; }
+
+/* ════════════ PLAY ════════════ */
+.play-section {
+  max-width: var(--max);
+  margin: 64px auto 0;
+  padding: 0 var(--pad);
+}
+
+.play-inner { position: relative; }
+
+.pot-container {
+  position: absolute;
+  top: -30px;
+  right: -40px;
+  width: 190px;
+  height: 190px;
+  pointer-events: none;
+  z-index: 10;
+}
+.pot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* pot.png has black bg – screen blend renders black as transparent */
+  mix-blend-mode: multiply;
+}
+
+.cooking-pill {
+  display: inline-block;
+  background: #fff;
+  border: 1.5px solid var(--grey-mid);
+  border-radius: 999px;
+  padding: 5px 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.play-featured {
+  background: var(--grey-card);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 20px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 14px;
+}
+.play-featured:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.10); }
+
+.play-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.play-card {
+  background: var(--grey-card);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 16px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.play-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
+.play-card .card-thumb { width: 56px; height: 56px; }
+
+/* ════════════ READ ════════════ */
+.read-section {
+  max-width: var(--max);
+  margin: 64px auto 0;
+  padding: 0 var(--pad);
+}
+
+.read-cards { display: flex; flex-direction: column; gap: 12px; }
+
+.read-card {
+  background: var(--grey-card);
+  border-radius: var(--radius-sm);
+  padding: 18px 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.read-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+
+.read-title { font-size: 18px; font-weight: 600; margin-bottom: 4px; color: var(--black); }
+.read-title .read-sub { font-weight: 400; font-size: 15px; color: var(--muted); }
+.read-desc { font-size: 13px; color: #555; }
+
+.read-placeholder { background: var(--grey-light); border-radius: var(--radius-sm); opacity: 0.55; }
+
+/* ════════════ CONTACT ════════════ */
+.contact-section {
+  max-width: var(--max);
+  margin: 64px auto 0;
+  padding: 0 var(--pad) 90px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  align-items: flex-end;
+}
+
+.contact-left { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+
+.contact-kettle {
+  width: 155px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.contact-cta {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+}
+
+.contact-right { display: flex; flex-direction: column; align-items: flex-end; gap: 20px; }
+
+.contact-title {
+  font-size: clamp(44px, 6vw, 64px);
+  font-weight: 600;
+  letter-spacing: -1.5px;
+  line-height: 1;
+  color: var(--black);
+}
+
+.contact-links { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+.contact-bar {
+  border-radius: 999px;
+  background: var(--grey-muted);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  transform-origin: right;
+}
+.contact-bar:nth-child(1) { width: 280px; height: 16px; }
+.contact-bar:nth-child(2) { width: 200px; height: 10px; }
+.contact-bar:nth-child(3) { width: 320px; height: 10px; }
+.contact-bar:nth-child(4) { width: 240px; height: 24px; }
+.contact-bar:nth-child(5) { width: 150px; height: 10px; }
+.contact-bar:hover { background: var(--black); transform: scaleX(1.04); }
+
+/* ── SPACING ── */
+.mt56 { margin-top: 56px; }
+.mt64 { margin-top: 64px; }
+
+/* ── FADE IN ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero            { animation: fadeUp 0.65s 0.00s both; }
+.work-section    { animation: fadeUp 0.65s 0.10s both; }
+.play-section    { animation: fadeUp 0.65s 0.15s both; }
+.read-section    { animation: fadeUp 0.65s 0.20s both; }
+.contact-section { animation: fadeUp 0.65s 0.25s both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 680px) {
+  :root { --pad: 20px; }
+  .hero { grid-template-columns: 1fr; gap: 24px; }
+  .lamp-container, .pot-container { display: none; }
+  .play-grid { grid-template-columns: 1fr; }
+  .contact-section { grid-template-columns: 1fr; }
+  .contact-right { align-items: flex-start; }
+  .contact-links { align-items: flex-start; }
+  .contact-bar { transform-origin: left; }
+  .logo-koli { font-size: 72px; }
+  .contact-bar:nth-child(1),
+  .contact-bar:nth-child(2),
+  .contact-bar:nth-child(3),
+  .contact-bar:nth-child(4),
+  .contact-bar:nth-child(5) { width: 100%; max-width: 280px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<header class="hero">
+  <div class="hero-identity">
+    <img class="hero-record" src="record.gif" alt="Spinning vinyl record">
+    <div class="logo-koli">Koli</div>
+    <div class="logo-sub">Product<br>Designer</div>
+  </div>
+
+  <div class="hero-frame-wrap">
+    <img class="hero-frame-img" src="frame.png" alt="Decorative frame">
+    <div class="hero-frame-inner">
+      <iframe
+        src="https://editor.p5js.org/Krishnokoli/full/MMDlnX028"
+        title="Koli's p5.js sketch"
+        loading="lazy"
+        sandbox="allow-scripts allow-same-origin"
+      ></iframe>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════ WORK ══════════ -->
+<section class="work-section">
+  <div class="work-inner">
+
+    <div class="lamp-container" aria-hidden="true">
+      <img class="lamp-img lamp-off" src="lamp.png" alt="">
+      <img class="lamp-img lamp-on"  src="lamp_light.png" alt="">
+    </div>
+
+    <h2 class="section-title">Work</h2>
+
+    <div class="work-cards">
+      <a class="card" href="#">
+        <div class="card-thumb"></div>
+        <div>
+          <div class="card-title">Health Connect</div>
+          <div class="card-desc">A large-scale healthcare platform designed to support provincial programs across Canada — from vaccine management to cancer screening and patient scheduling.</div>
+        </div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-thumb"></div>
+        <div>
+          <div class="card-title">OCADU Library</div>
+          <div class="card-desc">Redesigned OCAD University's online library experience to improve accessibility, navigation, and discoverability for students and researchers.</div>
+        </div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-thumb"></div>
+        <div>
+          <div class="card-title">Regology</div>
+          <div class="card-desc">Worked on regulatory compliance software for global financial systems, designing tools that simplify complex policy and reporting workflows.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="mt64"><div class="divider-wrap"><hr class="divider-line"></div></div>
+
+<!-- ══════════ PLAY ══════════ -->
+<section class="play-section">
+  <div class="play-inner">
+
+    <div class="pot-container" aria-hidden="true">
+      <img class="pot-img" src="pot.png" alt="">
+    </div>
+
+    <h2 class="section-title">Play</h2>
+    <div class="cooking-pill">currently cooking…</div>
+
+    <a class="play-featured" href="#">
+      <div class="card-thumb"></div>
+      <div>
+        <div class="card-title">Petal Note</div>
+        <div class="card-desc">A digital flower garden to collect and pick your flowers to make your own virtual bouquet and send a friend or loved one with a handwritten note.</div>
+      </div>
+    </a>
+
+    <div class="play-grid">
+      <a class="play-card" href="#">
+        <div class="card-thumb"></div>
+        <div>
+          <div class="card-title">Virus vs Vaccines</div>
+          <div class="card-desc">Built during early COVID vaccine trials, this multiplayer game explores urgency, competition, and collective action.</div>
+        </div>
+      </a>
+      <a class="play-card" href="#">
+        <div class="card-thumb"></div>
+        <div>
+          <div class="card-title">Bastu</div>
+          <div class="card-desc">An AR reconstruction of my grandmother's home through photos, animation, and interaction.</div>
+        </div>
+      </a>
+      <a class="play-card" href="#">
+        <div class="card-thumb"></div>
+        <div>
+          <div class="card-title">Illustrations &amp; Ideas</div>
+          <div class="card-desc">An AR reconstruction of my grandmother's home through photographs, animation, and interaction.</div>
+        </div>
+      </a>
+      <a class="play-card" href="#">
+        <div class="card-thumb"></div>
+        <div>
+          <div class="card-title">P5js Experiments</div>
+          <div class="card-desc">Small experiments in creative coding using P5js.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="mt64"><div class="divider-wrap"><hr class="divider-line"></div></div>
+
+<!-- ══════════ READ ══════════ -->
+<section class="read-section">
+  <h2 class="section-title">Read</h2>
+  <div class="read-cards">
+    <a class="read-card" href="#">
+      <div class="read-title">Phad <span class="read-sub">– Master's Thesis @ OCAD</span></div>
+      <div class="read-desc">An exploration of storytelling through augmented reality, using South Asian craft traditions as a medium.</div>
+    </a>
+    <a class="read-card" href="#">
+      <div class="read-title">Phad <span class="read-sub">– Master's Thesis @ OCAD</span></div>
+      <div class="read-desc">An exploration of storytelling through augmented reality, using South Asian craft traditions as a medium.</div>
+    </a>
+    <div class="read-placeholder" style="height: 60px;"></div>
+    <div class="read-placeholder" style="height: 44px; width: 65%;"></div>
+  </div>
+</section>
+
+<div class="mt64"><div class="divider-wrap"><hr class="divider-line"></div></div>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section class="contact-section">
+  <div class="contact-left">
+    <img class="contact-kettle" src="kettle.png" alt="Tea kettle">
+    <div class="contact-cta">Drop me an email<br>and have some chai!</div>
+  </div>
+  <div class="contact-right">
+    <h2 class="contact-title">Contact</h2>
+    <div class="contact-links">
+      <div class="contact-bar"></div>
+      <div class="contact-bar"></div>
+      <div class="contact-bar"></div>
+      <div class="contact-bar"></div>
+      <div class="contact-bar"></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
