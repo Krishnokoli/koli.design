@@ -98,7 +98,10 @@ a { text-decoration: none; color: inherit; }
   align-items: flex-start;
 }
 
-.hero-identity { display: flex; flex-direction: column; gap: 8px; }
+.hero-identity {
+  position: relative;
+  width: 260px;
+}
 
 .hero-record {
   width: 90px;
@@ -116,14 +119,18 @@ a { text-decoration: none; color: inherit; }
   line-height: 0.9;
   letter-spacing: -2px;
   color: var(--black);
-  margin-top: 4px;
+
+  margin-top: 12px;
 }
 .logo-sub {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--muted);
-  line-height: 1.4;
-  margin-top: 6px;
+  position: absolute;
+  left: 122px;
+  top: 300px;
+
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--black);
+  line-height: 1.05;
 }
 
 /* Frame + p5 */
