@@ -269,6 +269,18 @@ a { text-decoration: none; color: inherit; }
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-bottom: 14px;
 }
+.play-featured-content {
+  width: 100%;
+}
+
+.play-featured-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 12px;
+}
 .play-featured:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.10); }
 
 .play-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -467,14 +479,13 @@ a { text-decoration: none; color: inherit; }
       <img class="pot-img" src="pot.png" alt="">
     </div>
 
-    <h2 class="section-title">Play</h2>
-    <div class="cooking-pill">currently cooking…</div>
-
-    <a class="play-featured" href="#">
       <div class="card-thumb"></div>
       <div>
         <div class="card-title">Petal Note</div>
+        <div class="cooking-pill">currently cooking...</div>
+      </div>
         <div class="card-desc">A digital flower garden to collect and pick your flowers to make your own virtual bouquet and send a friend or loved one with a handwritten note.</div>
+      </div>
       </div>
     </a>
 
