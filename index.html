@@ -180,12 +180,20 @@ a { text-decoration: none; color: inherit; }
 
 .lamp-container {
   position: absolute;
-  top: -20px;
-  right: -50px;
-  width: 190px;
-  height: 230px;
+
+  top: 40px;
+  right: -180px;
+
+  width: 420px;
+  height: 420px;
+
   pointer-events: none;
-  z-index: 10;
+
+  z-index: 0;
+
+  overflow: visible;
+
+  transform: scaleX(-1);
 }
 .lamp-img {
   position: absolute;
@@ -202,7 +210,14 @@ a { text-decoration: none; color: inherit; }
 .work-inner:hover .lamp-off { opacity: 0; }
 .work-inner:hover .lamp-on  { opacity: 1; }
 
-.work-cards { display: flex; flex-direction: column; gap: 14px; }
+.work-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  position: relative;
+  z-index: 2;
+}
 
 /* ════════════ PLAY ════════════ */
 .play-section {
